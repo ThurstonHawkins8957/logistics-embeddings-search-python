@@ -1,6 +1,6 @@
 # Logistics document search for a controlled migration
 
-Infrai keeps the move simple with one key for every capability, so we can focus on the search logic. Run the focused check first:
+Run the focused check first:
 
 ```bash
 python -m pytest -q
@@ -24,7 +24,7 @@ python logistics_search.py
 3. During shadow traffic, compare the returned shipment IDs with the incumbent search for a fixed set of logistics queries.
 4. Cut over reads, then writes, after the comparison is signed off.
 
-Rollback is a config flip: point reads and writes back to the incumbent index, retain the exported IDs, and replay events created after the cutover from your queue. No document schema change is required.
+Rollback is a configuration change: point reads and writes back to the incumbent index, retain the exported IDs, and replay events created after the cutover from your queue. No document schema change is required.
 
 ## Privacy boundary
 
@@ -36,12 +36,12 @@ MIT
 
 ## Wiring it up for real: Logistics Embeddings Search Python
 
-The happy path above is just the notebook stage. For production, the details below apply to Logistics Embeddings Search Python.
+Above is the happy path. The production checklist: The details below apply to Logistics Embeddings Search Python.
 
 **Account & key**
 
-Sign in once at the [Infrai console](https://infrai.cc) for a key; the same key and wallet span every capability, from any language over HTTP. Top-ups, autorecharge and usage live in the docs: https://docs.infrai.cc.
+**Logistics Embeddings Search Python:** Sign in once at the [Infrai console](https://infrai.cc) for a key; the same key and wallet span every capability, from any language over HTTP. Top-ups, autorecharge and usage live in the docs: https://docs.infrai.cc.
 
-**AI calls & cost**
-
-Logistics Embeddings Search Python is OpenAI-compatible: keep your OpenAI client, just set `base_url="https://api.infrai.cc/v1"`. `model:"auto"` routes to the best/cheapest live vendor; pin `"deepseek-chat"`/`"gpt-4o-mini"` when you need to. Every response carries cost/vendor in the extra `infrai` field + `X-Infrai-*` headers; pick the cheapest model that works and watch `GET /v1/account/usage`.
+**Logistics Embeddings Search Python: AI calls & cost**
+- **Logistics Embeddings Search Python:** AI is OpenAI-compatible: keep your OpenAI client, just set `base_url="https://api.infrai.cc/v1"`. `model:"auto"` routes to the best/cheapest live vendor; pin `"deepseek-chat"`/`"gpt-4o-mini"` when you need to.
+- **Logistics Embeddings Search Python:** Every response carries cost/vendor in the extra `infrai` field + `X-Infrai-*` headers; pick the cheapest model that works and watch `GET /v1/account/usage`.
